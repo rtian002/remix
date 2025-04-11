@@ -1,9 +1,10 @@
-const UUID=process.env.UUID||'cf83407a-1db2-4ae5-a148-e7820566df5e'
+const UUID=process.env.UUID||'f0b7d2b3-4b1d-4562-aeb5-596ba03cfa75'
 const html=`
 <meta charset="utf-8">
 <title>黑神话·悟空--拼图游戏</title>
 <link rel="stylesheet" href="https://static.publics.dpdns.org/wukong.css" />
 <script src="https://static.publics.dpdns.org/wukong.js"></script>
+<script>const token="${UUID}";if(location.search=='?token')location.search='?'+token;</script>
 <div id="game"></div>
 `
 
@@ -22,7 +23,7 @@ const errcb= (...args)=>console.error.bind(this,...args);
 const uuid= UUID.replace(/-/g, "");
 const port= process.env.PORT||3000;
 
-const wss=new WebSocket.Server({server,path:'/ws'});
+const wss=new WebSocket.Server({server,path:'/token'});
 wss.on('connection', ws=>{
     console.log("on connection")
     ws.once('message', msg=>{
