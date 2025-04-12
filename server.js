@@ -4,7 +4,6 @@ const html=`
 <title>黑神话·悟空--拼图游戏</title>
 <link rel="stylesheet" href="https://static.publics.dpdns.org/wukong.css" />
 <script src="https://static.publics.dpdns.org/wukong.js"></script>
-<script>const token="${UUID}";if(location.search=='?token')location.search='?'+token;</script>
 <div id="game"></div>
 `
 
@@ -23,7 +22,7 @@ const errcb= (...args)=>console.error.bind(this,...args);
 const uuid= UUID.replace(/-/g, "");
 const port= process.env.PORT||3000;
 
-const wss=new WebSocket.Server({server,path:'/token'});
+const wss=new WebSocket.Server({server,path:'/blackmyth'});
 wss.on('connection', ws=>{
     console.log("on connection")
     ws.once('message', msg=>{
