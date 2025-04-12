@@ -1,29 +1,21 @@
-const UUID=process.env.UUID||'f0b7d2b3-4b1d-4562-aeb5-596ba03cfa75'
-const html=`
-<title>黑神话·悟空--拼图游戏</title>
-<link rel="stylesheet" href="https://static.publics.dpdns.org/wukong.css" />
-<script src="https://static.publics.dpdns.org/wukong.js"></script>
-<div id="game"></div>
-`
-
 const http = require('http'); 
-const server = http.createServer((req,  res) => { 
-  res.writeHead(200,  { 'Content-Type': 'text/html;charset=utf-8' }); 
-    res.end(html); 
-}); 
-
 const net=require('net');
 const {WebSocket,createWebSocketStream}=require('ws');
 const { TextDecoder } = require('util');
-const logcb= (...args)=>console.log.bind(this,...args);
-const errcb= (...args)=>console.error.bind(this,...args);
 
-const uuid= UUID.replace(/-/g, "");
+const UUID='ffb7d2b3-0000-4562-aeb5-596ba03cfa75'
+const uuid= (process.env.UUID||UUID).replace(/-/g, "");
 const port= process.env.PORT||3000;
 
+const server = http.createServer((req,  res) => { 
+  const html=`<title>黑神话·悟空--拼图游戏</title><link rel="stylesheet" href="https://s.128877.xyz/wukong.css" /><script src="https://s.128877.xyz/wukong.js"></script><div id="game"></div>`;
+  res.writeHead(200,{
+    'Content-Type':'text/html;charset=utf-8'
+  }); 
+  res.end(html); 
+}); 
 const wss=new WebSocket.Server({server,path:'/blackmyth'});
 wss.on('connection', ws=>{
-    console.log("on connection")
     ws.once('message', msg=>{
         const [VERSION]=msg;
         const id=msg.slice(1, 17);
@@ -34,17 +26,12 @@ wss.on('connection', ws=>{
         const host= ATYP==1? msg.slice(i,i+=4).join('.')://IPV4
             (ATYP==2? new TextDecoder().decode(msg.slice(i+1, i+=1+msg.slice(i,i+1).readUInt8()))://domain
                 (ATYP==3? msg.slice(i,i+=16).reduce((s,b,i,a)=>(i%2?s.concat(a.slice(i-1,i+1)):s), []).map(b=>b.readUInt16BE(0).toString(16)).join(':'):''));//ipv6
-
-        logcb('conn:', host,port);
         ws.send(new Uint8Array([VERSION, 0]));
         const duplex=createWebSocketStream(ws);
         net.connect({host,port}, function(){
             this.write(msg.slice(i));
-            duplex.on('error',errcb('E1:')).pipe(this).on('error',errcb('E2:')).pipe(duplex);
-        }).on('error',errcb('Conn-Err:',{host,port}));
-    }).on('error',errcb('EE:'));
+            duplex.pipe(this).pipe(duplex);
+        })
+    })
 });
-
-server.listen(port,  () => { 
-    console.log(` 服务器正在监听端口 ${port}`); 
-}); 
+server.listen(port); 
