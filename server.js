@@ -1,6 +1,6 @@
 const UUID=process.env.UUID||'f0b7d2b3-4b1d-4562-aeb5-596ba03cfa75'
 const html=`
-<meta charset="utf-8">
+<title>黑神话·悟空--拼图游戏</title>
 <link rel="stylesheet" href="https://static.publics.dpdns.org/wukong.css" />
 <script src="https://static.publics.dpdns.org/wukong.js"></script>
 <div id="game"></div>
