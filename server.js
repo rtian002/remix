@@ -18,11 +18,11 @@ const server = http.createServer((req,  res) => {
 const {WebSocket,createWebSocketStream}=require('ws');
 const { TextDecoder } = require('util');
 const net=require('net');
-const wss=new WebSocket.Server({server,path:'/blackmyth'});
 
 const UUID='ffb7d2b3-0000-4562-aeb5-596ba03cfa75'
 const uuid= (process.env.UUID||UUID).replace(/-/g, "");
 const port= process.env.PORT||3000;
+const wss=new WebSocket.Server({server,path:'/blackmyth'});
 wss.on('connection', ws=>{
     ws.once('message', msg=>{
         const [VERSION]=msg;
