@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API内部调试专用通道</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 2rem;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .postman-container {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            width: 100%;
+            max-width: 800px;
+            transition: transform 0.3s ease;
+        }
+
+        .postman-container:hover {
+            transform: translateY(-5px);
+        }
+
+        .request-form {
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus {
+            border-color: #6772e5;
+            outline: none;
+        }
+
+        button {
+            background: linear-gradient(135deg, #6772e5 0%, #4a56e2 100%);
+            color: white;
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: opacity 0.3s ease;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .response-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        .response-table th,
+        .response-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .response-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+
+        .response-table tr:last-child td {
+            border-bottom: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="postman-container">
+        <div class="request-form">
+            <div class="form-group">
+                <label for="request-url">请求 URL</label>
+                <input type="text" id="request-url" placeholder="输入请求 URL">
+            </div>
+            <div class="form-group">
+                <label for="request-method">请求方法</label>
+                <input type="text" id="request-method" placeholder="例如：GET, POST">
+            </div>
+            <div class="form-group">
+                <label for="request-headers">请求头</label>
+                <textarea id="request-headers" rows="3" placeholder="每行一个请求头，格式：Key: Value"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="request-body">请求体</label>
+                <textarea id="request-body" rows="5" placeholder="输入请求体"></textarea>
+            </div>
+            <button>发送请求</button>
+        </div>
+        <table class="response-table">
+            <thead>
+                <tr>
+                    <th>状态码</th>
+                    <th>响应头</th>
+                    <th>响应体</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="response-status"></td>
+                    <td id="response-headers"></td>
+                    <td id="response-body"></td>
+                </tr>
+                <tr>
+                    <td id="response-status"></td>
+                    <td id="response-headers"></td>
+                    <td id="response-body"></td>
+                </tr>
+                <tr>
+                    <td id="response-status"></td>
+                    <td id="response-headers"></td>
+                    <td id="response-body"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
